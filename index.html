@@ -1,0 +1,507 @@
+<html>
+<head>
+<title>DEEPSPACE (DPS) What The Gas Client</title>
+<meta http-equiv="Pragma" content="no-cache">
+<base target="_blank">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', "https://gas.deepspace.game/api");
+	xhr.send();
+
+	var respond;
+	var lastUpdated = "";
+  var shipLevel1 = "";
+  var shipLevel2 = "";
+  var shipLevel3 = "";
+  var shipLevel4 = "";
+  var shipLevel5 = "";
+  var totalShips = "";
+  var shipsLost = "";
+	var shipspecstats = "";
+	var shipstats100 = "";
+	var shipstats1 = "";
+	var totalPlayers = "";
+	var topMintersList = "";
+	var topShipsList = "";
+	var stakingPools = "";
+	var totalShipsStaked = "";
+	var circulatingSupply = "";
+	
+	largeFormat = d3.format(",.0f");
+	largeFormatDecimal = d3.format(",.2f");
+	largeFormatPercentage = d3.format(",.4f");
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+		  var data = xhr.response;
+		  tokenData = JSON.parse(data);
+		  console.log(tokenData);
+						
+		  shipLevel1 = tokenData["ship_rating_1_minted"];
+		  document.getElementById('shipLevel1').innerHTML = "Ship Rating 1 Mints: " + largeFormat(shipLevel1);
+      
+		  shipLevel2 = tokenData["ship_rating_2_minted"];
+		  document.getElementById('shipLevel2').innerHTML = "Ship Rating 2 Mints: " + largeFormat(shipLevel2);
+      
+  		shipLevel3 = tokenData["ship_rating_3_minted"];
+		  document.getElementById('shipLevel3').innerHTML = "Ship Rating 3 Mints: " + largeFormat(shipLevel3);
+      
+  		shipLevel4 = tokenData["ship_rating_4_minted"];
+		  document.getElementById('shipLevel4').innerHTML = "Ship Rating 4 Mints: " + largeFormat(shipLevel4);
+      
+  	  shipLevel5 = tokenData["ship_rating_5_minted"];
+		  document.getElementById('shipLevel5').innerHTML = "Ship Rating 5 Mints: " + largeFormat(shipLevel5);
+      
+  		totalShips = tokenData["total_ships_minted"];
+		  document.getElementById('totalShips').innerHTML = "Total Ships Built: " + largeFormat(totalShips);
+			
+  		shipsLost = tokenData["ships_lost"];
+		  document.getElementById('shipsLost').innerHTML = "Ships Lost: " + largeFormat(shipsLost);
+			
+  		totalShipsStaked = tokenData["total_ships_staked"];
+		  document.getElementById('totalShipsStaked').innerHTML = "Total Ships Staked: " + largeFormat(totalShipsStaked);
+			
+  		circulatingSupply = tokenData["circulating_supply"];
+		  document.getElementById('circulatingSupply').innerHTML = "Circulating Supply: " + largeFormat(circulatingSupply);
+			
+ 		shipSpecsCounts = tokenData["ship_spec_stat_counts"];
+		shipwith100stat = shipSpecsCounts["ships_with_100_stat"];
+		shipwith1stat = shipSpecsCounts["ships_with_1_stat"];
+		 document.getElementById('shipSpecs100').innerHTML = "Ships with at least one stat as 100: " + largeFormat(shipwith100stat);
+		document.getElementById('shipSpecs1').innerHTML = "Ships with at least one stat as 1: " + largeFormat(shipwith1stat);
+			
+		  topMintersList = tokenData["top_minters"];
+		  document.getElementById('topMintersList').innerHTML = "Top " + topMintersList.length +  " Minters:<br>";
+
+
+  // creates a <table> element and a <tbody> element
+  var tbl = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+  
+    var row = document.createElement("tr");
+    var cell = document.createElement("td");
+    var cellText = document.createTextNode("Position:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+	cell = document.createElement("td");
+      cellText = document.createTextNode("Wallet Address:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Total Ship Mints:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+  
+  var y = 0;
+		  for (let i = 0; i < topMintersList.length; i++) {
+		  y++;
+		  	minterId = topMintersList[i]["minter_id"];
+		  	numMinted = topMintersList[i]["num_minted"];
+			walletLink = "https://bscscan.com/token/0xf275e1AC303a4C9D987a2c48b8E555A77FeC3F1C?a=";
+			 			
+    // creates a table row
+    row = document.createElement("tr");
+    cell = document.createElement("td");
+    cellText = document.createTextNode(y);
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+	 cellText = document.createTextNode(minterId);
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(numMinted);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+    }
+		
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+  // appends <table> into <body>
+  document.getElementById('topMintersList').appendChild(tbl);
+  // sets the border attribute of tbl to 2;
+  tbl.setAttribute("border", "2");
+		
+			
+		  topShipsList = tokenData["top_ships"];
+		  document.getElementById('topShipsList').innerHTML = "Top " + topShipsList.length +  " Ships:<br>";
+
+
+  // creates a <table> element and a <tbody> element
+  tbl = document.createElement("table");
+  tblBody = document.createElement("tbody");
+  
+    row = document.createElement("tr");
+    cell = document.createElement("td");
+    cellText = document.createTextNode("Position:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+	cell = document.createElement("td");
+      cellText = document.createTextNode("Ship Address:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Owner Address:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+		      
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Ship Class:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Ship Rating:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Ship Total Stats:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Attack:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Shields:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Speed:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Mining:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Luck:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Special Attack:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Special Defense:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Max Health:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+						
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+  
+  var y = 0;
+		  for (let i = 0; i < topShipsList.length; i++) {
+		  y++;
+		  	shipId = topShipsList[i]["ship_id"];
+		  	ownerId = topShipsList[i]["ship_owner_id"];
+			level = topShipsList[i]["ship_rating"];
+		 	shipClass = topShipsList[i]["ship_class"];
+			statsTotal = topShipsList[i]["ship_stats_total"];
+			shipAttack = topShipsList[i]["ship_stats"]["attack"];
+			shipSpecialAttack = topShipsList[i]["ship_stats"]["special_attack"];
+			shipShields = topShipsList[i]["ship_stats"]["shields"];
+			shipSpecialDefense = topShipsList[i]["ship_stats"]["special_defense"];
+			shipSpeed = topShipsList[i]["ship_stats"]["speed"];
+			shipMining = topShipsList[i]["ship_stats"]["mining"];
+			shipLuck = topShipsList[i]["ship_stats"]["luck"];
+			shipMaxHealth = topShipsList[i]["ship_stats"]["max_health"];
+			 			
+    // creates a table row
+    row = document.createElement("tr");
+    cell = document.createElement("td");
+    cellText = document.createTextNode(y);
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+	 cellText = document.createTextNode(shipId);
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(ownerId);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipClass);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(level);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(statsTotal);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipAttack);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipShields);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+		  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipSpeed);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipMining);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipLuck);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipSpecialAttack);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipSpecialDefense);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(shipMaxHealth);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+			  
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+    }
+		
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+  // appends <table> into <body>
+  document.getElementById('topShipsList').appendChild(tbl);
+  // sets the border attribute of tbl to 2;
+  tbl.setAttribute("border", "2");
+			
+
+
+////////////////////
+			
+		  stakingPools = tokenData["staking_pools"];
+		  document.getElementById('stakingPools').innerHTML = "Staking Pools:<br>";
+
+
+  // creates a <table> element and a <tbody> element
+  tbl = document.createElement("table");
+  tblBody = document.createElement("tbody");
+  
+    row = document.createElement("tr");
+    cell = document.createElement("td");
+    cellText = document.createTextNode("Pool Name:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+	cell = document.createElement("td");
+      cellText = document.createTextNode("Min Stars:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Max Stars:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+		      
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Loss Chance:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Luck Factor:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Entry Fee:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Exit Fee:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Number of Ships:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Allocation Points:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Deposit Enabled:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+						
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+  
+		  for (let i = 0; i < stakingPools.length; i++) {
+		  	poolId = stakingPools[i]["pool_id"];
+		  	poolMinStars = stakingPools[i]["pool_min_stars"];
+			poolMaxStars = stakingPools[i]["pool_max_stars"];
+		 	poolLossChance = stakingPools[i]["pool_loss_chance"];
+			poolLuckFactor = stakingPools[i]["pool_luck_factor"];
+			poolEntryFee = stakingPools[i]["pool_entry_fee"] + " DPS";
+			poolExitFee = stakingPools[i]["pool_exit_fee"] + " DPS";
+			poolNumShips = largeFormat(stakingPools[i]["pool_num_ships"]);
+			poolAllocPoint = stakingPools[i]["pool_alloc_point"];
+			poolDepositEnabled = stakingPools[i]["pool_deposit_enabled"];
+			 			
+    // creates a table row
+    row = document.createElement("tr");
+			  
+    cell = document.createElement("td");
+	 cellText = document.createTextNode(poolId);
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolMinStars);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolMaxStars);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolLossChance);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolLuckFactor);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolEntryFee);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolExitFee);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolNumShips);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+		  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolAllocPoint);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+	  
+
+    cell = document.createElement("td");
+      cellText = document.createTextNode(poolDepositEnabled);
+      cell.appendChild(cellText);
+      row.appendChild(cell);  
+			  
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+    }
+		
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+  // appends <table> into <body>
+  document.getElementById('stakingPools').appendChild(tbl);
+  // sets the border attribute of tbl to 2;
+  tbl.setAttribute("border", "2");
+			
+		  lastUpdated = tokenData["last_updated"];
+		  document.getElementById('lastUpdated').innerHTML = "Last Updated: " + lastUpdated;
+
+		}
+	}
+</script>
+</head>
+<body>
+<h1>DEEPSPACE (DPS) Ships NFT Client Stats</h1>
+<h2>About DEEPSPACE</h2>
+<p><b>Welcome to the DEEPSPACE Metaverse!</b><br/>
+DEEPSPACE is a Play-to-Earn space multiverse exploration strategy game!<br/>
+Earn passive income from holding $DPS, trading NFTs, and taking risks as you explore DEEPSPACE with your fleet of ships!<br/>
+Prepare to explore, harvest, and fight your way through the DEEPSPACE universe!<br/>
+Learn more at: <a href="https://deepspace.game">https://deepspace.game</a><br/>
+Buy DEEPSPACE (DPS) at: <a href="https://app.deepspace.game">https://app.deepspace.game</a></br>
+Mint/Buy/Sell/Trade Ships on the DEEPSPACE App at: <a href="https://app.deepspace.game">https://app.deepspace.game</a>
+</p>
+	
+<p><i>Tip: Check the console log for the full JSON response from the token stat server</i></p>
+<p>Pro Tip: DEEPSPACE (DPS) Ships NFTs API Endpoint: <a href="https://stats.deepspace.game/api">https://stats.deepspace.game/api</a></p>
+<br/>
+<br><div id="totalShips">Total Ships Built: N/A</div>
+<br><div id="shipsLost">Ships Lost: N/A</div>
+<br><div id="totalShipsStaked">Total Ships Staked: N/A</div>
+<br><div id="circulatingSupply">Circulating Supply: N/A</div>
+<br><div id="shipLevel1">Ship Rating 1 Mints: N/A</div>
+<br><div id="shipLevel2">Ship Rating 2 Mints: N/A</div>
+<br><div id="shipLevel3">Ship Rating 3 Mints: N/A</div>
+<br><div id="shipLevel4">Ship Rating 4 Mints: N/A</div>
+<br><div id="shipLevel5">Ship Rating 5 Mints: N/A</div>
+<br><div id="shipSpecs100">Ships with at least one stat as 100: N/A</div>
+<br><div id="shipSpecs1">Ships with at least one stat as 1: N/A</div>
+<br><div id="stakingPools">Staking Pools: - N/A</div>
+<br><div id="topMintersList">Top Minters List: - N/A</div>
+<br><div id="topShipsList">Top Ships List: - N/A</div>
+<br><div id="lastUpdated">Last Updated: N/A</div>
+</body>
+</html>
