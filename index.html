@@ -51,6 +51,113 @@
 			
 		  lastUpdated = tokenData["last_updated"];
 		  document.getElementById('lastUpdated').innerHTML = "Last Updated: " + lastUpdated;
+			
+		  contractsList = tokenData["contracts"];
+		  document.getElementById('contractsList').innerHTML = "Contracts List:<br>";
+
+
+  // creates a <table> element and a <tbody> element
+  tbl = document.createElement("table");
+  tblBody = document.createElement("tbody");
+  
+    row = document.createElement("tr");
+    cell = document.createElement("td");
+    cellText = document.createTextNode("Contract Count:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+	cell = document.createElement("td");
+      cellText = document.createTextNode("Contract Name:");
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Contract Address:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+		      
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Previous Month:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("BNB Gas Used:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Current Month:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("BNB Gas Used:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+						
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+  y = 0;
+		  for (let i = 0; i < contractsList.length; i++) {
+			  y++;
+		  	contractCount = y;
+		  	contractName = contractsList[i]["contract_name"];
+			contractAddress = contractsList[i]["contract_address"];
+		 	previousMonth = contractsList[i]["previous_month"];
+			previousGasValue = contractsList[i]["prev_gas_value"];
+			currentMonth = contractsList[i]["current_month"];
+			currentGasValue = contractsList[i]["gas_value"];
+			 			
+    // creates a table row
+    row = document.createElement("tr");
+			  
+    cell = document.createElement("td");
+	 cellText = document.createTextNode(contractCount);
+      cell.appendChild(cellText);
+row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(contractName);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(contractAddress);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(previousMonth);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(previousGasValue);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(currentMonth);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(currentGasValue);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  			  
+    // add the row to the end of the table body
+    tblBody.appendChild(row);
+    }
+		
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+  // appends <table> into <body>
+  document.getElementById('stakingPools').appendChild(tbl);
+  // sets the border attribute of tbl to 2;
+  tbl.setAttribute("border", "2");
 
 		}
 	}
@@ -67,7 +174,10 @@ Learn more at: <a href="https://deepspace.game">https://deepspace.game</a><br/>
 Buy DEEPSPACE (DPS) at: <a href="https://app.deepspace.game">https://app.deepspace.game</a></br>
 Mint/Buy/Sell/Trade Ships on the DEEPSPACE App at: <a href="https://app.deepspace.game">https://app.deepspace.game</a>
 </p>
-<p>This will display the monthly gas usage across the DEEPSPACE metaverse on the BNB Smart Chain network.</p>
+<p>This will display the monthly gas usage across the DEEPSPACE metaverse on the BNB Smart Chain network.
+<br/>All contracts have been registered with <a href="https://www.binance.com/en/blog/all/introducing-the-buidl-reward-program-for-binance-smart-chain-421499824684901064">Binance BUILD Rewards</a> program
+<br/>The official Binance leaderboard is here: <a href="https://www.bnbchain.world/en/leaderboard">https://www.bnbchain.world/en/leaderboard</a>
+</p>
 <p><i>Tip: Check the console log for the full JSON response from the token stat server</i></p>
 <p>Pro Tip: DEEPSPACE (DPS) Gas API Endpoint: <a href="https://gas.deepspace.game/api">https://gas.deepspace.game/api</a></p>
 <br/>
@@ -79,5 +189,7 @@ Mint/Buy/Sell/Trade Ships on the DEEPSPACE App at: <a href="https://app.deepspac
 <br><div id="monthStart">Month Start: N/A</div>
 <br><div id="monthEnd">Month End: N/A</div>
 <br><div id="lastUpdated">Last Updated: N/A</div>
+<br>
+<br><div id="contractsList">Contracts List: - N/A</div>
 </body>
 </html>
