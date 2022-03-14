@@ -16,6 +16,10 @@
 	var monthStart = "";
 	var monthEnd = "";
 	
+	var totalBNBMonthPrev = "";
+	var monthStartPrev = "";
+	var monthEndPrev = "";
+	
 	largeFormat = d3.format(",.0f");
 	largeFormatDecimal = d3.format(",.2f");
 	largeFormatPercentage = d3.format(",.4f");
@@ -34,6 +38,15 @@
       
   		monthEnd = tokenData["month_end"];
 		  document.getElementById('monthEnd').innerHTML = "Month End: " + monthEnd;
+			
+		  totalBNBMonthPrev = tokenData["total_bnb_prev_month"];
+		  document.getElementById('totalBNBMonthPrev').innerHTML = "Previous Total BNB Month: " + largeFormatDecimal(totalBNBMonthPrev);
+      
+		  monthStartPrev = tokenData["prev_month_start"];
+		  document.getElementById('monthStartPrev').innerHTML = "Previous Month Start: " + monthStartPrev;
+      
+  		monthEndPrev = tokenData["prev_month_end"];
+		  document.getElementById('monthEndPrev').innerHTML = "Previous Month End: " + monthEndPrev;
      
 			
 		  lastUpdated = tokenData["last_updated"];
@@ -56,8 +69,12 @@ Mint/Buy/Sell/Trade Ships on the DEEPSPACE App at: <a href="https://app.deepspac
 </p>
 <p>This will display the monthly gas usage across the DEEPSPACE metaverse on the BNB Smart Chain network.</p>
 <p><i>Tip: Check the console log for the full JSON response from the token stat server</i></p>
-<p>Pro Tip: DEEPSPACE (DPS) Ships NFTs API Endpoint: <a href="https://stats.deepspace.game/api">https://stats.deepspace.game/api</a></p>
+<p>Pro Tip: DEEPSPACE (DPS) Gas API Endpoint: <a href="https://gas.deepspace.game/api">https://gas.deepspace.game/api</a></p>
 <br/>
+<br><div id="totalBNBMonthPrev">Previous Total BNB Month: N/A</div>
+<br><div id="monthStartPrev">Previous Month Start: N/A</div>
+<br><div id="monthEndPrev">Previous Month End: N/A</div>
+<br>
 <br><div id="totalBNBMonth">Total BNB Month: N/A</div>
 <br><div id="monthStart">Month Start: N/A</div>
 <br><div id="monthEnd">Month End: N/A</div>
