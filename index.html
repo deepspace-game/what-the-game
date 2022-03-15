@@ -47,14 +47,12 @@
       
   		monthEndPrev = tokenData["prev_month_end"];
 		  document.getElementById('monthEndPrev').innerHTML = "Previous Month End: " + monthEndPrev;
-     
-			
-		  lastUpdated = tokenData["last_updated"];
-		  document.getElementById('lastUpdated').innerHTML = "Last Updated: " + lastUpdated;
-			
+						
 		  contractsList = tokenData["contracts"];
 		  document.getElementById('contractsList').innerHTML = "Contracts List:<br>";
 
+		lastUpdated = tokenData["last_updated"];
+		  document.getElementById('lastUpdated').innerHTML = "Last Updated: " + lastUpdated;
 
   // creates a <table> element and a <tbody> element
   tbl = document.createElement("table");
@@ -82,6 +80,16 @@ row.appendChild(cell);
       row.appendChild(cell);
 			
     cell = document.createElement("td");    
+	cellText = document.createTextNode("Previous BNB Reward Eligible:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("Previous BNB Reward:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
 	cellText = document.createTextNode("BNB Gas Used:");
       cell.appendChild(cellText);
       row.appendChild(cell);
@@ -92,7 +100,12 @@ row.appendChild(cell);
       row.appendChild(cell);
 			
     cell = document.createElement("td");    
-	cellText = document.createTextNode("BNB Gas Used:");
+	cellText = document.createTextNode("BNB Reward Eligible:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			
+    cell = document.createElement("td");    
+	cellText = document.createTextNode("BNB Reward:");
       cell.appendChild(cellText);
       row.appendChild(cell);
 						
@@ -106,9 +119,15 @@ row.appendChild(cell);
 			contractAddress = contractsList[i]["contract_address"];
 		 	previousMonth = contractsList[i]["previous_month"];
 			previousGasValue = contractsList[i]["prev_gas_value"];
+			prevBNBRewardEligible = contractsList[i]["prev_bnb_reward_eligible"];
+			prevBNBReward = contractsList[i]["prev_bnb_reward"];
 			currentMonth = contractsList[i]["current_month"];
 			currentGasValue = contractsList[i]["gas_value"];
-			 			
+			currentGasValue = contractsList[i]["gas_value"];
+			bnbRewardEligible = contractsList[i]["bnb_reward_eligible"];
+			bnbReward = contractsList[i]["bnb_reward"];
+
+			  
     // creates a table row
     row = document.createElement("tr");
 			  
@@ -134,6 +153,16 @@ row.appendChild(cell);
       row.appendChild(cell);
 			  
     cell = document.createElement("td");
+      cellText = document.createTextNode(prevBNBRewardEligible);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(prevBNBReward);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
       cellText = document.createTextNode(previousGasValue);
       cell.appendChild(cellText);
       row.appendChild(cell);
@@ -145,6 +174,16 @@ row.appendChild(cell);
 			  
     cell = document.createElement("td");
       cellText = document.createTextNode(currentGasValue);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(bnbRewardEligible);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+    cell = document.createElement("td");
+      cellText = document.createTextNode(bnbReward);
       cell.appendChild(cellText);
       row.appendChild(cell);
 			  			  
