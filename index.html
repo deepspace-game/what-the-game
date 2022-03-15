@@ -78,6 +78,11 @@ row.appendChild(cell);
 	cellText = document.createTextNode("Previous Month:");
       cell.appendChild(cellText);
       row.appendChild(cell);
+
+			    cell = document.createElement("td");    
+	cellText = document.createTextNode("Previous BNB Gas Used:");
+      cell.appendChild(cellText);
+      row.appendChild(cell);
 			
     cell = document.createElement("td");    
 	cellText = document.createTextNode("Previous BNB Reward Eligible:");
@@ -89,13 +94,14 @@ row.appendChild(cell);
       cell.appendChild(cellText);
       row.appendChild(cell);
 			
+			
     cell = document.createElement("td");    
-	cellText = document.createTextNode("BNB Gas Used:");
+	cellText = document.createTextNode("Current Month:");
       cell.appendChild(cellText);
       row.appendChild(cell);
 			
     cell = document.createElement("td");    
-	cellText = document.createTextNode("Current Month:");
+	cellText = document.createTextNode("BNB Gas Used:");
       cell.appendChild(cellText);
       row.appendChild(cell);
 			
@@ -108,7 +114,7 @@ row.appendChild(cell);
 	cellText = document.createTextNode("BNB Reward:");
       cell.appendChild(cellText);
       row.appendChild(cell);
-						
+									
     // add the row to the end of the table body
     tblBody.appendChild(row);
   y = 0;
@@ -153,6 +159,12 @@ row.appendChild(cell);
       row.appendChild(cell);
 			  
     cell = document.createElement("td");
+      cellText = document.createTextNode(previousGasValue);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+			  
+			  
+    cell = document.createElement("td");
       cellText = document.createTextNode(prevBNBRewardEligible);
       cell.appendChild(cellText);
       row.appendChild(cell);
@@ -162,11 +174,7 @@ row.appendChild(cell);
       cell.appendChild(cellText);
       row.appendChild(cell);
 			  
-    cell = document.createElement("td");
-      cellText = document.createTextNode(previousGasValue);
-      cell.appendChild(cellText);
-      row.appendChild(cell);
-			  
+
     cell = document.createElement("td");
       cellText = document.createTextNode(currentMonth);
       cell.appendChild(cellText);
