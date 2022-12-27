@@ -132,6 +132,11 @@ row.appendChild(cell);
 			currentGasValue = contractsList[i]["gas_value"];
 			bnbRewardEligible = contractsList[i]["bnb_reward_eligible"];
 			bnbReward = contractsList[i]["bnb_reward"];
+			  
+			  
+			var linkContractAddress = document.createElement('a');
+			linkContractAddress.href = "#";
+			linkContractAddress.innerText = contractAddress;
 
 			  
     // creates a table row
@@ -148,7 +153,8 @@ row.appendChild(cell);
       row.appendChild(cell);
 			  
     cell = document.createElement("td");
-      cellText = document.createTextNode(contractAddress);
+			  			  
+      cellText = document.createTextNode(linkContractAddress);
       cell.appendChild(cellText);
       row.appendChild(cell);
 			  
